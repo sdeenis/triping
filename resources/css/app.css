@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source "../views";
+
+@theme {
+    --font-sans: 'Onest', sans-serif;
+    --font-serif: 'Onest', serif;
+    --font-mono: 'Onest', monospace;
+    --font-heading: 'Onest', sans-serif;
+    --font-body: 'Onest', sans-serif;
+}
