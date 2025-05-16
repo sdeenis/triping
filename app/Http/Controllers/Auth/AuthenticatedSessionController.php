@@ -26,10 +26,7 @@ class AuthenticatedSessionController extends Controller
             $request->session()->regenerate();
 
             // return redirect()->intended(route('dashboard'));
-            echo "User logged in successfully!";
-            foreach ($credentials as $key => $value) {
-                echo "$key: $value\n";
-            }
+            return redirect()->intended(route('home'));
         } else {
 
             return back()->withErrors([
@@ -45,6 +42,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect(route('login'));
+        return redirect(route('home'));
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class RegisteredUserController extends Controller
@@ -29,13 +31,9 @@ class RegisteredUserController extends Controller
             'created_at' => now(),
         ]);
 
-        // AuthenticatedSessionController->login($user);
+        Auth::login($user);
 
-        echo "User registered successfully!";
-        foreach ($user->getAttributes() as $key => $value) {
-            echo "$key: $value\n";
-        }
 
-        // return view('');
+        return redirect(route('home'));
     }
 }

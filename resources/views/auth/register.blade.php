@@ -3,9 +3,12 @@
 @section('title', 'Registro')
 
 @section('content')
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 ">
     <div>
-        <a href="/"> <!-- Logo --> </a>
+        <a href="/" class="flex items-center">
+            <img src="{{ asset('images/logo.png') }}" class="h-16 w-auto" alt="Logo" />
+            <span class="self-center text-4xl font-semibold whitespace-nowrap">triping</span>
+        </a>
     </div>
 
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
