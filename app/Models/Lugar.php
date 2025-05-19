@@ -29,4 +29,11 @@ class Lugar extends Model
     {
         return $this->belongsTo(Ciudad::class);
     }
+
+    public function itinerarios()
+    {
+        return $this->belongsToMany(Itinerario::class, 'itinerario_lugar')
+            ->withPivot('dia')
+            ->withTimestamps();
+    }
 }

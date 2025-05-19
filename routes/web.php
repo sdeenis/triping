@@ -22,4 +22,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/crear-itinerario', [ItinerarioController::class, 'store'])->name('itinerarios.create');
+
+    Route::post('/guardar-itinerario', [ItinerarioController::class, 'guardar'])->name('itinerario.guardar-lugares');
 });
+
+Route::get('/itinerarios', [ItinerarioController::class, 'listar'])->name('itinerarios.listar');
+
+Route::get('/itinerarios/{id}', [ItinerarioController::class, 'mostrar'])->name('itinerarios.mostrar');

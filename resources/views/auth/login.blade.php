@@ -1,9 +1,9 @@
-@extends('layouts.guest')
+@extends('layouts.auth')
 
 @section('title', 'Iniciar sesión')
 
 @section('content')
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 ">
     <div>
         <a href="/" class="flex items-center space-x-2 rtl:space-x-reverse">
             <img src="{{ asset('images/logo.png') }}" class="h-16 w-auto" alt="Logo" />
@@ -11,7 +11,7 @@
         </a>
     </div>
 
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+    <div class="w-full sm:max-w-md mt-6 px-6 py-4 shadow-md overflow-hidden sm:rounded-lg">
         @if (session('status'))
         <div class="mb-4 font-medium text-sm text-green-600">
             {{ session('status') }}
