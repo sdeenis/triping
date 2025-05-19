@@ -13,16 +13,10 @@
             <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
                 <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
                     <li class="flex items-center justify-center">
-                        <a href="#" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700">Home</a>
+                        <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">¿Cómo funciona?</a>
                     </li>
                     <li class="flex items-center justify-center">
-                        <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">Services</a>
-                    </li>
-                    <li class="flex items-center justify-center">
-                        <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">Pricing</a>
-                    </li>
-                    <li class="flex items-center justify-center">
-                        <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">Contact</a>
+                        <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">Itinerarios de muestra</a>
                     </li>
 
                     @guest
@@ -114,7 +108,7 @@
             </div>
 
             <!-- Contenido del modal -->
-            <form action="#" method="POST" class="p-6 space-y-6">
+            <form action="{{ route('itinerarios.create') }}" method="POST" class="p-6 space-y-6">
                 @csrf
                 <div>
                     <label for="titulo" class="block text-lg font-medium text-gray-700">Título del itinerario</label>
@@ -127,10 +121,6 @@
                     <select name="ciudad_id" id="ciudad_id" required
                         class="mt-2 block w-full rounded-lg border border-gray-300 p-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500">
                         <option value="">Selecciona una ciudad</option>
-
-                        <option value="1">Madrid</option>
-                        <option value="2">Barcelona</option>
-                        <option value="3">Valencia</option>
                     </select>
                 </div>
 
@@ -158,22 +148,25 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('crud-modal');
+        const select = document.getElementById('ciudad_id');
+        let ciudadesCargadas = false;
 
-        // Observador para detectar clases en el modal
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    const isVisible = modal.classList.contains('flex') || modal.classList.contains('block');
-
-                    if (isVisible) {
-                        // Añadir padding al body
-                        document.body.style.paddingRight = '15px';
-                    } else {
-                        // Quitar el padding
-                        document.body.style.paddingRight = '';
-                    }
-                }
-            });
+        const observer = new MutationObserver(() => {
+            const isVisible = modal.classList.contains('flex') || modal.classList.contains('block');
+            if (isVisible && !ciudadesCargadas) {
+                fetch('/api/ciudades')
+                    .then(response => response.json())
+                    .then(data => {
+                        select.innerHTML = '<option value="">Selecciona una ciudad</option>';
+                        data.forEach(ciudad => {
+                            const option = document.createElement('option');
+                            option.value = ciudad.id;
+                            option.textContent = ciudad.nombre;
+                            select.appendChild(option);
+                        });
+                        ciudadesCargadas = true;
+                    });
+            }
         });
 
         observer.observe(modal, {
