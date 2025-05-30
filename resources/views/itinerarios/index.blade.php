@@ -5,23 +5,25 @@
 @section('content')
 
 @foreach ($itinerarios as $itinerario)
-<section id="datos" class="flex flex-col items-center mt-20">
-    <a href="{{ route('itinerarios.mostrar', $itinerario->id) }} " class="w-full flex justify-center">
-        <div class="w-3/4 bg-white rounded-2xl shadow-xl p-8 border border-gray-200 hover:shadow-2xl transition duration-300">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">{{ $itinerario->titulo }}</h1>
-                <p class="text-lg text-gray-600 font-medium mb-4">
+<section id="datos" class="d-flex flex-column align-items-center mt-5">
+    <a href="{{ route('itinerarios.mostrar', $itinerario->id) }}" class="w-100 d-flex justify-content-center text-decoration-none">
+        <div class="w-75 bg-white rounded-3 shadow border border-secondary p-4 hover-shadow transition" style="transition: box-shadow 0.3s;">
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold text-dark mb-2">{{ $itinerario->titulo }}</h1>
+                <p class="fs-5 text-secondary fw-medium mb-3">
                     {{ $itinerario->ciudad->nombre }} &middot; {{ $itinerario->dias }} días
                 </p>
             </div>
 
-            <div class="flex justify-center">
+            <div class="d-flex justify-content-center mb-4">
                 <img src="{{ asset('images/ciudades/' . strtolower($itinerario->ciudad->nombre) . '.jpg') }}"
                     alt="Imagen de {{ strtolower($itinerario->ciudad->nombre) }}"
-                    class="rounded-xl shadow-md w-full h-80 object-cover mb-6">
+                    class="rounded-3 shadow-sm w-100" style="max-height: 320px; object-fit: cover;">
             </div>
 
-            <p class="text-sm text-right text-gray-500">{{$itinerario->created_at->format('d/m/Y')}} | Creado por: <span class="font-semibold text-gray-700">{{ $itinerario->usuario->name }}</span></p>
+            <p class="text-end text-muted small">
+                {{ $itinerario->created_at->format('d/m/Y') }} | Creado por: <span class="fw-semibold text-dark">{{ $itinerario->usuario->name }}</span>
+            </p>
         </div>
     </a>
 </section>
