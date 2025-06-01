@@ -65,6 +65,7 @@
         <div id="map"
             style="height: 400px; width: 75%; margin: 0 auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
         </div>
+        <div id="map-legend" class="mt-3 w-75 d-flex flex-wrap justify-content-center gap-3"></div>
 
     </section>
 
@@ -210,7 +211,29 @@
 
 
 
+function generarLeyenda() {
+    const legendContainer = document.getElementById("map-legend");
+    const dias = {{ $itinerario->dias }};
 
+    for (let dia = 1; dia <= dias; dia++) {
+        const color = colors[(dia - 1) % colors.length];
+        const legendItem = document.createElement("div");
+        legendItem.classList.add("d-flex", "align-items-center", "gap-2");
+
+        legendItem.innerHTML = `
+            <span style="
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+                background-color: ${color};
+                border: 1px solid #000;
+            "></span>
+            <span class="text-secondary small" style="font-style: italic;">Día ${dia}</span>
+        `;
+        legendContainer.appendChild(legendItem);
+    }
+}
         const apiKey = "5b3ce3597851110001cf6248d1ee8add6423439c8b2c8d37f22305e0"; // Tu API key OpenRouteService
         const url = "https://api.openrouteservice.org/v2/directions/foot-walking/geojson";
 
@@ -223,7 +246,9 @@
         let markers = [];
 
         function initMap() {
-            map = L.map("map").setView([40.4168, -3.7038], 13);
+            const ciudadLat = {{ $itinerario->ciudad->latitud }};
+            const ciudadLng = {{ $itinerario->ciudad->longitud }};
+            map = L.map("map").setView([ciudadLat, ciudadLng], 13);
 
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: "&copy; OpenStreetMap contributors",
@@ -290,14 +315,54 @@
 
         // Dibujar todas las rutas en el mapa con colores
 async function actualizarMapa() {
-    clearMapLayers();
+   clearMapLayers();
     const coordsPorDia = getCoordsPorDia();
 
     let allBounds = [];
 
     for (const [dia, coords] of Object.entries(coordsPorDia)) {
-        if (coords.length < 2) continue;
+        const color = colors[(dia - 1) % colors.length];
+                if (coords.length === 1) {
+            // Solo un punto: crear marcador con color correspondiente
+            const coord = coords[0];
+            const latlng = [coord[1], coord[0]];
 
+            const markerHtml = `
+                <div style="
+                    background-color: ${color};
+                    color: white;
+                    font-weight: bold;
+                    border: 2px solid black;
+                    border-radius: 50%;
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-shadow: 1px 1px 2px black;
+                    font-size: 16px;
+                    ">
+                    1
+                </div>
+            `;
+
+            const markerIcon = L.divIcon({
+                className: '',
+                html: markerHtml,
+                iconSize: [28, 28],
+                iconAnchor: [14, 28],
+                popupAnchor: [0, -28]
+            });
+
+            const marker = L.marker(latlng, { icon: markerIcon }).addTo(map);
+            markers.push(marker);
+
+            // Ajustar vista para que muestre ese punto
+            const bounds = L.latLngBounds(latlng, latlng);
+            allBounds.push(bounds);
+
+            continue; // saltar al siguiente día
+        }
         try {
             const data = await fetchRoute(coords);
             const color = colors[(dia - 1) % colors.length];
@@ -366,9 +431,12 @@ async function actualizarMapa() {
         // Inicializar mapa al cargar
         window.addEventListener("load", () => {
             initMap();
+            generarLeyenda()
+
 
             document.getElementById('btn-guardar-itinerario').addEventListener('click', () => {
                 actualizarMapa();
+                
             });
         });
     </script>

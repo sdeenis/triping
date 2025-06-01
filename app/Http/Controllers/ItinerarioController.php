@@ -58,11 +58,14 @@ class ItinerarioController extends Controller
         return redirect()->route('home')->with('success', 'Itinerario guardado con éxito.');
     }
 
-    public function listar()
-    {
-        $itinerarios = Itinerario::with('ciudad', 'usuario')->get();
-        return view('itinerarios.index', ['itinerarios' => $itinerarios]);
-    }
+public function listar()
+{
+    $itinerarios = Itinerario::with('ciudad', 'usuario')
+        ->has('lugares')  // Solo itinerarios que tengan lugares
+        ->get();
+
+    return view('itinerarios.index', ['itinerarios' => $itinerarios]);
+}
 
     public function mostrar($id)
     {
