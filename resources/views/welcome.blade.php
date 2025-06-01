@@ -2,93 +2,142 @@
 
 @section('title', 'Inicio')
 
+@push('styles')
+.card-img-top {
+  height: 500px;       /* altura fija */
+  object-fit: cover;   /* recorta para llenar el área sin deformar */
+  width: 100%;         /* que ocupe todo el ancho del card */
+  border: 3px solid #ddd; /* borde opcional */
+    border-radius: 0.5rem; /* bordes redondeados */
+}
+  .carousel-inner img {
+    height: 400px;
+    object-fit: cover;
+  }
+
+
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.7) !important; /* Más opaco */
+    color: #fff; /* Asegura texto blanco */
+  }
+
+  .carousel-caption h5,
+  .carousel-caption p {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* Mejor lectura sobre imágenes claras */
+  }
+
+
+@endpush
+
 @section('content')
-<section class="py-5 bg-light">
-    <div id="sticky-parallax-header" class="container d-flex flex-row justify-content-between align-items-start">
+<section class="py-5 ">
+    <div id="sticky-parallax-header" class="container d-flex flex-row justify-content-evenly align-items-start">
         <div class="col-md-6 pt-5">
             <p class="display-3 fw-bold mb-4">Explora <br>sin límites.</p>
-            <p class="fs-4 text-muted mb-4">Deja que el viaje se adapte a ti</p>
-            <p class="fs-4 text-muted mb-4">Encuentra destinos que realmente encajan contigo</p>
+            <p class="fs-4 text-muted mb-4">Elige, personaliza y viaja a tu ritmo.</p>
+            <p class="fs-4 text-muted mb-4">Cada itinerario, tan único como tú.</p>
             <a href="#first" class="btn btn-primary btn-lg">Saber más</a>
         </div>
         <div class="col-md-5 pt-5">
-            <a href="#first" class="text-decoration-none">Ir a la sección 1</a>
+            <img src="{{ asset('images/viajar.jpg') }}" alt="Viajar" class="img-fluid rounded shadow">
         </div>
     </div>
 </section>
 
 <section id="first" class="py-5">
-    <div class="container">
-        <div class="row g-5">
-            <div class="col-md-6">
-                <h2 class="fw-bold">Visualiza el itinerario en un mapa</h2>
-                <p class="fs-5">Organizado por días, ten todo tu itinerario en un mismo sitio en una misma web.</p>
-            </div>
-            <div class="col-md-6">
-                <p>hola</p>
-            </div>
+    <p class="text-center fs-1 fw-bold mb-4">¿Cómo funciona?</p>
+   <div class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card h-100">
+        <img src="{{ asset('images/paso1alt.png') }}" class="card-img-top" alt="Captura 1">
+        <div class="card-body">
+          <h5 class="card-title">Elige ciudad y duración</h5>
+          <p class="card-text">Elige los datos iniciales de tu itinerario de entre todas las ciudades posibles.</p>
         </div>
+      </div>
     </div>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <img src="{{ asset('images/paso2alt2.png') }}" class="card-img-top" alt="Captura 2">
+        <div class="card-body">
+          <h5 class="card-title">Añade los destinos a tu itinerario</h5>
+          <p class="card-text">Incluye los sitios que vas a visitar en tu viaje y observa la ruta en el mapa.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <img src="{{ asset('images/paso3.png') }}" class="card-img-top" alt="Captura 3">
+        <div class="card-body">
+          <h5 class="card-title">Comparte tu itinerario</h5>
+          <p class="card-text">Haz público tu itinerario para que lo pueda ver el resto del mundo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section>
+<section id="ejemplos" class="py-5">
+<div class="container">
+  <p class="text-center fs-1 fw-bold mb-4">Itinerarios de muestra</p>
+
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <a href="#">
+          <img src="{{ asset('images/ciudades/madrid.jpg') }}" class="d-block w-100" alt="Itinerario 1">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3">
+            <h5>Madrid en 3 días</h5>
+            <p>Un recorrido por los sitios más emblemáticos de la capital.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="#">
+          <img src="{{ asset('images/ciudades/barcelona.jpg') }}" class="d-block w-100" alt="Itinerario 2">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3">
+            <h5>Barcelona cultural</h5>
+            <p>Arte, arquitectura y mar en un itinerario de 2 días.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="carousel-item">
+        <a href="#">
+          <img src="{{ asset('images/ciudades/málaga.jpg') }}" class="d-block w-100" alt="Itinerario 3">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3">
+            <h5>Málaga al atardecer</h5>
+            <p>Rincones únicos para disfrutar del sur con encanto.</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</div>
+
+</section>
+
 </section>
 
 <!-- Modal para crear itinerario -->
-<div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="crudModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="crudModalLabel">Crear nuevo itinerario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('itinerarios.create') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="titulo" class="form-label">Título del itinerario</label>
-                        <input type="text" name="titulo" id="titulo" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ciudad_id" class="form-label">Ciudad destino</label>
-                        <select name="ciudad_id" id="ciudad_id" class="form-select" required>
-                            <option value="">Selecciona una ciudad</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="dias" class="form-label">Cantidad de días</label>
-                        <input type="number" name="dias" id="dias" class="form-control" min="1" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Crear itinerario</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const select = document.getElementById('ciudad_id');
-        let ciudadesCargadas = false;
 
-        const modal = document.getElementById('crudModal');
-        modal.addEventListener('shown.bs.modal', () => {
-            if (!ciudadesCargadas) {
-                fetch('/api/ciudades')
-                    .then(response => response.json())
-                    .then(data => {
-                        select.innerHTML = '<option value="">Selecciona una ciudad</option>';
-                        data.forEach(ciudad => {
-                            const option = document.createElement('option');
-                            option.value = ciudad.id;
-                            option.textContent = ciudad.nombre;
-                            select.appendChild(option);
-                        });
-                        ciudadesCargadas = true;
-                    });
-            }
-        });
-    });
-</script>
 @endpush

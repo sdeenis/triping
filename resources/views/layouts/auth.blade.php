@@ -29,16 +29,7 @@
             overflow-x: hidden;
         }
 
-        .background-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -10;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            background: radial-gradient(60% 120% at 50% 50%, hsla(0, 0%, 100%, 0) 0, rgba(252, 205, 238, 0.5) 100%);
-        }
+        
     </style>
 
     @stack('head')

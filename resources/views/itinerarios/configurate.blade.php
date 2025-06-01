@@ -102,7 +102,11 @@
                                 <div
                                     class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-start p-3 border rounded mb-3">
                                     <div class="mb-2 mb-md-0">
-                                        <h6 class="mb-1 fw-semibold text-dark">{{ $lugar->nombre }}</h6>
+                                        <h6 class="mb-1 fw-semibold text-dark">@if ($lugar->categoria === $preferenciaAutor)
+                                        <span class="text-warning" title="Recomendado ⭐️">⭐️</span>
+                                         @endif{{ $lugar->nombre }}</h6>
+                                        {{-- Mostrar la estrellita si la categoría coincide con la preferencia --}}
+                                        
                                         <p class="mb-0 small text-muted">{{ $lugar->categoria }}</p>
                                         <p class="mb-0 small text-muted">{{ $lugar->direccion }}</p>
                                     </div>

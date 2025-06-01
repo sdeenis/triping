@@ -44,4 +44,27 @@ class AuthenticatedSessionController extends Controller
 
         return redirect(route('home'));
     }
+
+    public function storePreference(Request $request)
+    {
+        $preferencia = $request->input('preferencias');
+
+        if ($preferencia == 1) {
+            $preferenciaTexto = 'Parque';
+        } elseif ($preferencia == 2) {
+            $preferenciaTexto = 'Monumento';
+        } elseif ($preferencia == 3) {
+            $preferenciaTexto = 'Museo';
+        } elseif ($preferencia == 4) {
+            $preferenciaTexto = 'Restaurante';
+        } else {
+            $preferenciaTexto = '0';
+        }
+
+        $user = auth()->user(); 
+        $user->preferencias = $preferenciaTexto;
+        $user->save();
+
+        return redirect(route('home'));
+    }
 }

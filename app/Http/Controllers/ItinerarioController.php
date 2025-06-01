@@ -29,13 +29,18 @@ class ItinerarioController extends Controller
         $itinerario->save();
 
         // Obtener los lugares de la ciudad
-        $lugares = Lugar::where('ciudad_id', $validated['ciudad_id'])->get();
+
         $autor = User::where('id', $itinerario->user_id)->first();
-        // Redirigir a la vista de edición o continuación del itinerario
+        $preferencia = $autor->preferencias;
+         $lugares = Lugar::where('ciudad_id', $validated['ciudad_id'])
+        ->orderByRaw("categoria = ? DESC", [$preferencia])
+        ->get();
+
         return view('itinerarios.configurate', [
             'itinerario' => $itinerario,
             'lugares' => $lugares,
-            'autor' => $autor->name
+            'autor' => $autor->name,
+            'preferenciaAutor' => $preferencia,
         ]);
     }
 
@@ -58,13 +63,44 @@ class ItinerarioController extends Controller
         return redirect()->route('home')->with('success', 'Itinerario guardado con éxito.');
     }
 
-public function listar()
+public function listar(Request $request)
 {
-    $itinerarios = Itinerario::with('ciudad', 'usuario')
-        ->has('lugares')  // Solo itinerarios que tengan lugares
-        ->get();
+    // Obtener ciudades con id => nombre
+    $ciudades = Ciudad::pluck('nombre', 'id');
 
-    return view('itinerarios.index', ['itinerarios' => $itinerarios]);
+    $query = Itinerario::with('ciudad', 'usuario')->has('lugares');
+
+    // Filtros
+    if ($request->filled('ciudad')) {
+        $query->where('ciudad_id', $request->ciudad);
+    }
+
+    if ($request->filled('dias')) {
+        $query->where('dias', $request->dias);
+    }
+
+    if ($request->filled('fecha')) {
+        $fecha = match ($request->fecha) {
+            'hoy' => now()->startOfDay(),
+            '7dias' => now()->subDays(7),
+            'mes' => now()->subMonth(),
+            default => null,
+        };
+
+        if ($fecha) {
+            $query->where('created_at', '>=', $fecha);
+        }
+    }
+
+    if ($request->filled('creador')) {
+        $query->whereHas('usuario', function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->creador . '%');
+        });
+    }
+
+    $itinerarios = $query->latest()->get();
+
+    return view('itinerarios.index', compact('itinerarios', 'ciudades'));
 }
 
     public function mostrar($id)

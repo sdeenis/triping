@@ -21,11 +21,18 @@ Route::middleware('auth')->group(function () {
         return Ciudad::all();
     });
 
+    Route::get('/preferencias', function () {
+        return view('auth.preferencias');
+    })->name('preferencias');
+
+    Route::post('/preferencias', [AuthenticatedSessionController::class, 'storePreference'])->name('guardar.preferencia');
+
     Route::post('/crear-itinerario', [ItinerarioController::class, 'store'])->name('itinerarios.create');
 
     Route::post('/guardar-itinerario', [ItinerarioController::class, 'guardar'])->name('itinerario.guardar-lugares');
 });
 
 Route::get('/itinerarios', [ItinerarioController::class, 'listar'])->name('itinerarios.listar');
+
 
 Route::get('/itinerarios/{id}', [ItinerarioController::class, 'mostrar'])->name('itinerarios.mostrar');
