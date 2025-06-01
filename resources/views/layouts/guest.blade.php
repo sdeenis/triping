@@ -24,6 +24,12 @@
         body {
             font-family: 'Onest', sans-serif;
         }
+
+        #map {
+            height: 400px;
+            width: 100px;
+            border-radius: 8px;
+        }
     </style>
 
     @stack('head')
@@ -49,24 +55,24 @@
                             <a class="nav-link" href="#">Itinerarios de muestra</a>
                         </li>
                         @guest
-                            <li class="nav-item">
-                                <a href="{{ route('login') }}" class="btn btn-primary me-2">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="btn btn-primary me-2">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
+                        </li>
                         @endguest
 
                         @auth
-                            <li class="nav-item">
-                                <button data-bs-toggle="modal" data-bs-target="#crudModal" class="btn btn-success me-2">Crear itinerario</button>
-                            </li>
-                            <li class="nav-item">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger">Logout</button>
-                                </form>
-                            </li>
+                        <li class="nav-item">
+                            <button data-bs-toggle="modal" data-bs-target="#crudModal" class="btn btn-success me-2">Crear itinerario</button>
+                        </li>
+                        <li class="nav-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Logout</button>
+                            </form>
+                        </li>
                         @endauth
                     </ul>
                 </div>
