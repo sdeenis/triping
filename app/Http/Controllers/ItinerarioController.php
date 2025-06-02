@@ -60,7 +60,7 @@ class ItinerarioController extends Controller
             ]);
         }
         // Redirigir a la vista de itinerarios o donde desees
-        return redirect()->route('home')->with('success', 'Itinerario guardado con éxito.');
+        return redirect()->route('itinerarios.listar')->with('success', 'Itinerario guardado con éxito.');
     }
 
 public function listar(Request $request)

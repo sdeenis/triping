@@ -59,7 +59,7 @@
     </section>
 
     <section id="mapa" class="d-flex flex-column align-items-center mt-4">
-        <button type="submit" id="btn-guardar-itinerario" class="btn btn-success">
+        <button type="submit" id="btn-guardar-itinerario" class="btn btn-success mb-3">
             Actualizar mapa
         </button>
         <div id="map"
@@ -419,7 +419,6 @@ async function actualizarMapa() {
 
         } catch (error) {
             console.error(`Error ruta día ${dia}:`, error);
-            alert(`Error obteniendo ruta para el día ${dia}. Revisa consola.`);
         }
     }
 

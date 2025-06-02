@@ -11,8 +11,9 @@ use App\Models\Lugar;
 
 class ApiLugaresTuristicos extends Controller
 {
-    public function getLugaresTuristicos($ciudad)
+    public function getLugaresTuristicos(Request $request)
     {
+        $ciudad = $request->input('ciudad');
         $apiKey = env('FOURSQUARE_API_KEY');
 
         $response = Http::withHeaders([
